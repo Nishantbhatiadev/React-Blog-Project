@@ -130,6 +130,10 @@ export class Service {
             fileId
         )
     }
+
+    async downloadFile(fileId) {
+
+    }
 }
 
 const service = new Service()
