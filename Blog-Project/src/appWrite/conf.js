@@ -1,5 +1,5 @@
 import config from "../config/config";
-import { Client, Account, ID, Databases, Storage, Query } from "appwrite"
+import { Client, ID, Databases, Storage, Query } from "appwrite"
 
 export class Service {
     client = new Client();
@@ -124,16 +124,15 @@ export class Service {
         }
     }
 
-    async getFilepreview(fileId) {
-        return await this.bucket.getFilePreview(
-            config.appwriteBucketId,
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,
             fileId
         )
     }
 
-    async downloadFile(fileId) {
-
-    }
+    // async downloadFile(fileId) {
+    // }
 }
 
 const service = new Service()
