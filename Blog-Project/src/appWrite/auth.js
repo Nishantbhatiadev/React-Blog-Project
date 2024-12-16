@@ -11,28 +11,30 @@ export class AuthService {
             .setEndpoint(conf.appwriteUrl)
             .setProject(conf.appwriteProjectId);
         this.account = new Account(this.client);
-                
+
     }
 
-    async createAccount({email, password, name}) {
+    async createAccount({ email, password, name }) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
                 // call another method
-                return this.login({email, password});
+                return this.login({ email, password });
             } else {
-               return  userAccount;
+                return userAccount;
             }
         } catch (error) {
-            throw error;
+            console.error("AuthService :: createAccount :: Error:", error);
+            throw new Error("Failed to create account. Please try again.");
         }
     }
 
-    async login({email, password}) {
+    async login({ email, password }) {
         try {
             return await this.account.createEmailSession(email, password);
         } catch (error) {
-            throw error;
+            console.error("AuthService :: login :: Error:", error);
+            throw new Error("Login failed. Please check your credentials.");
         }
     }
 
@@ -41,9 +43,8 @@ export class AuthService {
             return await this.account.get();
         } catch (error) {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            return null;
         }
-
-        return null;
     }
 
     async logout() {
@@ -52,6 +53,7 @@ export class AuthService {
             await this.account.deleteSessions();
         } catch (error) {
             console.log("Appwrite serive :: logout :: error", error);
+            throw new Error("Failed to log out. Please try again.");
         }
     }
 }
