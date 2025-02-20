@@ -22,10 +22,10 @@ export{
     RTE,
     Signup,
     Login,
+    Button,
     PostForm,
     PostCard,
     AuthLayout,
-    Button,
     Input,
     Select
 }

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import appwriteService from "../appWrite/conf"
-import { Container, PostCard } from '../components/index'
+import React, { useState, useEffect } from 'react';
+import appwriteService from "../appWrite/conf";
+import { Container, PostCard } from '../components/index';
 
 const Home = () => {
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([]);
+
     useEffect(() => {
         appwriteService.getPosts([]).then((posts) => {
             if (posts) {
-                setPosts(posts.documents)
+                setPosts(posts.documents);
             }
-        })
-    }, [])
+        });
+    }, []);
 
     if (posts.length === 0) {
         return (
@@ -25,23 +26,25 @@ const Home = () => {
                     </div>
                 </Container>
             </div>
-        )
+        );
     } 
-    return(
+
+    return (
         <div className='w-full py-8'>
             <Container>
                 <div className="flex flex-wrap">
-                    {posts.map((post)=>{
-                        return(
-                            <div className="p-2 w-1/4" key={post.$id}>
-                                <PostCard {...post}/>
+                    {posts.map((post) => {
+                        const { $id, title, featuredImage } = post; // Destructure the properties
+                        return (
+                            <div className="p-2 w-1/4" key={$id}>
+                                <PostCard id={$id} title={title} featuredImage={featuredImage} />
                             </div>
-                        )
+                        );
                     })}
                 </div>
             </Container>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
