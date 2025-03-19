@@ -42,13 +42,15 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            console.log("Appwrite serive :: getCurrentUser :: error", error);
-            return null;
+            console.error("AuthService :: getCurrentUser :: Error:", error);
+            if (error.code === 401) { // Unauthorized - no user logged in
+                return null;
+            }
+            throw new Error("Failed to get current user. Please try again.");
         }
     }
 
     async logout() {
-
         try {
             await this.account.deleteSessions();
         } catch (error) {
@@ -60,4 +62,4 @@ export class AuthService {
 
 const authService = new AuthService();
 
-export default authService
+export default authService;

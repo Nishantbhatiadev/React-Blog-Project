@@ -22,7 +22,7 @@ const App = () => {
     .finally(() => setLoading(false))
   }, [])
 
-  if (loading) {
+  if (loading) {   // this need to be checked
     return (
       <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
         <div className='w-full block'>
